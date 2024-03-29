@@ -1,6 +1,6 @@
 #include "date.h"
 
-Date::Date(){
+Date::Date(string b_date){
     string str_month = '';
     string str_day = '';
     string str_year = '';
@@ -29,7 +29,7 @@ Date::Date(){
     year = stoi(str_year);
 }
 
-void Date::print_date(){
+string Date::print_date(){
     if(month == 1){
         birthdate = "January " + to_string(day) + ", " + to_string(year);
     }
@@ -66,4 +66,6 @@ void Date::print_date(){
     else if(month == 12){
         birthdate = "December " + to_string(day) + ", " + to_string(year);
     }
+
+    return birthdate;
 }
