@@ -14,3 +14,5 @@ class Date
         Date();
         void print_date();
 }
+
+#endif
