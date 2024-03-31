@@ -22,6 +22,7 @@ Person::Person(string f_name, string l_name, string b_date, string email, string
     // phone and email strings are in full version
     this->f_name = f_name;
     this->l_name = l_name;
+    birthdate = b_date;
 }
 
 
