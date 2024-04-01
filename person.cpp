@@ -16,13 +16,35 @@ Person::~Person(){
     delete l_name;
 }
 
-//NEED TO FINISH THIS!!!
 Person::Person(string f_name, string l_name, string b_date, string email, string phone){
     // TODO: Complete this method!
     // phone and email strings are in full version
     this->f_name = f_name;
     this->l_name = l_name;
-    birthdate = b_date;
+    birthdate = new Date(b_date); 
+    string type, temp;
+    for (int i = 1; i < email.length(); i++)
+    {
+        if (email[i] == ')')
+        {
+            temp = email.substr(i+2);
+            break;
+        }
+        type += email[i];
+    }
+    this->email = new Email(type, temp);
+    type = "";
+    for (int i = 1; i < phone.length(); i++)
+    {
+        if (phone[i] == ')')
+        {
+            temp = phone.substr(i+2);
+            break;
+        }
+        type += phone[i];
+    }
+    this->phone = new Phone(type, temp);
+
 }
 
 
