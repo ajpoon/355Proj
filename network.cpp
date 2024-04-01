@@ -43,7 +43,15 @@ Person* Network::search(string fname, string lname){
     // if found, returns a pointer to it, else returns NULL
     // TODO: Complete this method
     // Note: two ways to implement this, 1st making a new Person with fname and lname and and using search(Person*), 2nd using fname and lname directly.
-
+    Person* curr = head;
+    if(curr == NULL)
+        return NULL;
+    else if(curr.fname == fname && curr.lname == lname){
+        return &curr;
+    }
+    else{
+        curr = curr->next;
+    }
 }
 
 
@@ -141,9 +149,19 @@ void Network::push_back(Person* newEntry){
 bool Network::remove(string fname, string lname){
     // TODO: Complete this method
         // need to find where the person is and then delete them
-
+    Person* curr = head;
+    if(curr == NULL)
+        return NULL;
+    else if(curr.fname == fname && curr.lname == lname){
+        (curr->prev)->next = curr->next;
+        (curr->next)->prev = curr->prev;
+    }
+    else{
+        curr = curr->next;
+    }
         
         // need to figure out the right time to delete curr too
+    delete curr;
     
 }
 
@@ -255,6 +273,23 @@ void Network::showMenu(){
             // if not found: cout << "Person not found! \n";
             cout << "Print people with last name \n";
             cout << "Last name: ";
+            cin >> lname;
+            Person* curr = head;
+            if(curr == NULL){
+                cout << "Person not found! \n";
+            }
+            else{
+                if(curr.lname == lname){
+                    cout << curr.f_name << endl;
+                    cout << curr.l_name << endl;
+                    cout << curr.birthdate << endl;
+                    cout << "(" << curr.type << ") " << curr.email << endl;
+                    cout << "(" << curr.type << ") " << curr.phonenum << endl; 
+                }
+                else{
+                    curr = curr->next;
+                }
+            }
         }
         
         else
