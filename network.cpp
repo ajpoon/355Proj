@@ -1,4 +1,3 @@
-
 #include "network.h"
 #include <limits>
 #include "misc.h"
@@ -26,13 +25,15 @@ Person* Network::search(Person* searchEntry){
     // TODO: Complete this method
 
     Person* curr = head;
-    if(curr == NULL)
-        return NULL;
-    else if(curr == searchEntry){
-        return &curr;
-    }
-    else{
-        curr = curr->next;
+    for(int i=0; i<count;i++){
+        if(curr == NULL)
+            return NULL;
+        else if(curr == searchEntry){
+            return &curr;
+        }
+        else{
+            curr = curr->next;
+        }
     }
 
 }
@@ -44,13 +45,15 @@ Person* Network::search(string fname, string lname){
     // TODO: Complete this method
     // Note: two ways to implement this, 1st making a new Person with fname and lname and and using search(Person*), 2nd using fname and lname directly.
     Person* curr = head;
-    if(curr == NULL)
-        return NULL;
-    else if(curr.fname == fname && curr.lname == lname){
-        return &curr;
-    }
-    else{
-        curr = curr->next;
+    for(int i=0; i<count;i++){
+        if(curr == NULL)
+            return NULL;
+        else if(curr.fname == fname && curr.lname == lname){
+            return &curr;
+        }
+        else{
+            curr = curr->next;
+        }
     }
 }
 
@@ -60,6 +63,56 @@ Person* Network::search(string fname, string lname){
 void Network::loadDB(string filename){
     // TODO: Complete this method
 
+    // read the people from the file and create a doubly linked list with info from each person
+    ifstream file(filename);
+
+    Person* curr = head;
+
+    string firstname = '';
+
+    while(getline(file, firstname)){
+        string sa = '';
+        if(count == 0){
+            Person* head = new Person();
+            string fname = firstname;
+            getline(file, sa);
+            string lname = sa;
+            getline(file, sa);
+            string date = sa;
+            getline(file, sa);
+            string email = sa;
+            getline(file, sa);
+            string phone = sa;
+            head(fname, lname, date, email, phone);
+            count++
+            getline(file, sa); // gets the dashed line
+            head->prev = NULL;
+            head->next = NULL;
+        }
+        else{
+            Person* newone = new Person();
+            string fname = firstname;
+            getline(file, sa);
+            string lname = sa;
+            getline(file, sa);
+            string date = sa;
+            getline(file, sa);
+            string email = sa;
+            getline(file, sa);
+            string phone = sa;
+            newone(fname, lname, date, email, phone);
+            count++
+            Person* curr = head;
+            Person* curr = pprev;
+            for(int i = 0; i < count; i++){
+                pprev = curr;
+                curr = curr->next;
+            }
+            newone = curr;
+            newone->prev = pprev;
+            newone->next = NULL;
+        }
+    }
 }
 
 void Network::saveDB(string filename){
