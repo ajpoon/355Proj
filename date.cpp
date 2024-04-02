@@ -1,13 +1,13 @@
 #include "date.h"
 
 Date::Date(string b_date){
-    string str_month = '';
-    string str_day = '';
-    string str_year = '';
+    string str_month = "";
+    string str_day = "";
+    string str_year = "";
 
     int cycle = 0;
 
-    for(int i = 0; i < strlen(b_date); i++){
+    for(int i = 0; i < b_date.length(); i++){
         if(b_date[i] == '/'){
             cycle++;
         }
