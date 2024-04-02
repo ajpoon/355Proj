@@ -12,8 +12,6 @@ Person::~Person(){
     // TODO: complete the method!
     delete email;
     delete phone;
-    delete f_name;
-    delete l_name;
 }
 
 Person::Person(string f_name, string l_name, string b_date, string email, string phone){

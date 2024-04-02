@@ -11,7 +11,7 @@ class Date
         int day;
         int year;
     public:
-        Date();
+        Date(string bday);
         void print_date();
 }
 
