@@ -29,7 +29,8 @@ Date::Date(string b_date){
     year = stoi(str_year);
 }
 
-string Date::print_date(){
+void Date::print_date(){
+    string birthdate;
     if(month == 1){
         birthdate = "January " + to_string(day) + ", " + to_string(year);
     }
@@ -67,5 +68,5 @@ string Date::print_date(){
         birthdate = "December " + to_string(day) + ", " + to_string(year);
     }
 
-    return birthdate;
+    cout << birthdate << endl;
 }

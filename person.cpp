@@ -1,5 +1,6 @@
 
 #include "person.h"
+#include <iostream>
 
 Person::Person(){
     // I'm already done! 
@@ -89,7 +90,7 @@ void Person::set_person(){
     cout << "Phone number: ";
     // code here
     std::getline(std::cin,temp);
-    phone = new Phone(type, temp)
+    phone = new Phone(type, temp);
 }
 
 
@@ -107,7 +108,7 @@ void Person::set_person(string filename){
         getline(fin, temp);
         l_name = temp;
         getline(fin, temp);
-        birthdate = temp;
+        birthdate = new Date(temp);
         getline(fin, temp);
         for (int i = 1; i < temp.length(); i++)
         {
@@ -140,17 +141,41 @@ bool Person::operator==(const Person& rhs){
     // TODO: Complete this method!
     // Note: you should check first name, last name and birthday between two persons
     // refer to bool Date::operator==(const Date& rhs)
+    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate == rhs.birthdate)
+        return true;
+    else
+        return false;
 }
 
 bool Person::operator!=(const Person& rhs){ 
     // TODO: Complete this method!
+    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate == rhs.birthdate)
+        return false;
+    else
+        return true;
 }
 
 
 void Person::print_person(){
     // Already implemented for you! Do not change!
 	cout << l_name <<", " << f_name << endl;
-	birthdate->print_date("Month D, YYYY");
+	birthdate->print_date();
     phone->print();
     email->print();
+}
+
+int main(){
+
+    Person c1;
+    c1.print_person();
+    cout << "----------------\n";
+
+    Person c2("person_template.txt");
+    c2.print_person();
+    cout << "----------------\n";
+
+    cout << "Is c1 equal to c2: " << (c1==c2) << endl;
+    cout << "Is c1 not equal to c2: " << (c1!=c2) << endl;
+
+    return 0;
 }

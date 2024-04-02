@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+using namespace std;
 
 class Date
 {
@@ -11,8 +12,8 @@ class Date
         int day;
         int year;
     public:
-        Date(string bday);
+        Date(string b_date);
         void print_date();
-}
+};
 
 #endif
