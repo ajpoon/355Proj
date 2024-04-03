@@ -66,72 +66,72 @@ void Network::loadDB(string filename){
     // TODO: Complete this method
 
     // read the people from the file and create a doubly linked list with info from each person
-    
-    Person* newPerson = new Person;
 
     string temp, type;
-    ifstream fin(filename);
-    getline(fin, temp);
-    newPerson->f_name = temp;
-    getline(fin, temp);
-    newPerson->l_name = temp;
-    getline(fin, temp);
-    newPerson->birthdate = new Date(temp);
-    getline(fin, temp);
-    for (int i = 1; i < temp.length(); i++)
-    {
-        if (temp[i] == ')')
-        {
-            temp = temp.substr(i+2);
-            break;
-        }
-        type += temp[i];
-    }
-    newPerson->phone = new Phone(type, temp);
-    type = "";
-    getline(fin, temp);
-    for (int i = 1; i < temp.length(); i++)
-    {
-        if (temp[i] == ')')
-        {
-            temp = temp.substr(i+2);
-            break;
-        }
-        type += temp[i];
-    }
-    
-    head = tail = newPerson;
 
-    
-    while(getline(fin, temp)){
-        Person* newPerson = new Person(filename);
-        tail->next = newPerson;
-        newPerson->prev = tail;
-        tail = newPerson;
-        
-    }
-    
+    ifstream fin1(filename);
 
+    // while(getline(fin1, temp)){
+    //     cout << "in while loop" << endl;
+    //     if(temp == "--------------------"){
+    //         count++;
+    //     }
+    // }
     
+    // for(int i = 0; i < count; i++){
+    //         Person* newPerson = new Person(filename);
+    //         if(head == NULL){
+    //             head = tail = newPerson;
+    //         }
+    //         else{
+    //             tail->next = newPerson;
+    //             newPerson->prev = tail;
+    //             tail = newPerson;
+    //         }
+    // }
+
+    string fname, lname, bdate, email, phone, dashes;
+
+    while (getline(fin1, fname)) {
+        getline(fin1, lname);
+        getline(fin1, bdate);
+        getline(fin1, email);
+        getline(fin1, phone);
+        getline(fin1, dashes);
+        count++;
+
+        Person* newPerson = new Person(fname, lname, bdate, email, phone);
+
+            if(head == NULL){
+                head = tail = newPerson;
+            }
+            else{
+                tail->next = newPerson;
+                newPerson->prev = tail;
+                tail = newPerson;
+            }
+    }
 }
 
 void Network::saveDB(string filename){
     // TODO: Complete this method
     //open file with filename and then go through linked list to print info to the .txt file
 
-    ofstream output;
-    output.open(filename);
+    fstream file; 
+    file.open(filename,ios::out); 
 
     Person* ptr = head;
 
     while(ptr != NULL){
-        output << ptr->f_name << endl;
-        output << ptr->l_name << endl;
-        //output << ptr->birthdate-> << endl;
-        //string phonenum = ptr.(phone.get_contact());
-        //output << "(" << phonenum << ") " << endl;
-        // output << "(" << curr.type << ") " << curr.phonenum << endl; 
-        output << "--------------------" << endl;
+        file << ptr->f_name << endl;
+        file << ptr->l_name << endl;
+        string birthstr = ptr->birthdate->get_date();
+        file << birthstr << endl;
+        string emailnum = ptr->email->get_contact("full");
+        file << emailnum << endl;
+        string phonenum = ptr->phone->get_contact("full");
+        file << phonenum << endl;
+        file << "--------------------" << endl;
         
         
         ptr = ptr->next;
@@ -194,27 +194,50 @@ void Network::push_back(Person* newEntry){
         head = tail = newEntry;
     }
     
-    
+    count++;
 }
 
 
 bool Network::remove(string fname, string lname){
     // TODO: Complete this method
         // need to find where the person is and then delete them
-    Person* curr = head;
+    Person* temp = head;
+    Person* tprev = head;
+    // for(int i = 0; i < count; i++){
+    //     if(curr == NULL)
+    //         return false;
+    //     else if(curr->f_name == fname && curr->l_name == lname){
+    //         (curr->prev)->next = curr->next;
+    //         (curr->next)->prev = curr->prev;
+    //         delete curr;
+    //         return true;
+    //     }
+    //     else{
+    //         curr = curr->next;
+    //     }
+    // }
+
     for(int i = 0; i < count; i++){
-        if(curr == NULL)
-            return false;
-        else if(curr->f_name == fname && curr->l_name == lname){
-            (curr->prev)->next = curr->next;
-            (curr->next)->prev = curr->prev;
-            return true;
+        if(i == 0 && count == 1){
+            head = head->next;
+            free(temp);
         }
         else{
-            curr = curr->next;
+            if(i == count - 1 && temp){
+                tprev->next = temp->next;
+                count--;
+                free(temp);
+                return true;
+            }
+            else{
+                tprev = temp;
+                if(tprev == NULL)
+                    break;
+                temp = temp->next;
+            }
         }
     }
-    
+    return false;
     
 }
 
@@ -288,12 +311,21 @@ void Network::showMenu(){
             // TODO: use push_front, and not push_back 
             // Add a new Person ONLY if it does not exists!
             cout << "Adding a new person \n";
-
-            cin >> fname;
-            cin >> lname;
+            cout << "First name: ";
+            getline(cin,fname);
+            cout << "Last name: ";
+            getline(cin,lname);
             Person* ptr = search(fname, lname);
-            if(ptr != NULL){
-                push_front(ptr);
+            if(ptr == NULL){
+                string bdate, email, phone;
+                cout << "Birthday: ";
+                cin >> bdate;
+                cout << "Email: ";
+                cin >> email;
+                cout << "Phone: ";
+                cin >> phone;
+                Person* newPerson = new Person(fname, lname, bdate, email, phone);
+                push_front(newPerson);
             }
         }
         else if (opt == 4){
@@ -302,9 +334,9 @@ void Network::showMenu(){
             // if not found: cout << "Person not found! \n";
             cout << "Removing a person \n";
             cout << "First name: ";
-            cin >> fname;
+            getline(cin,fname);
             cout << "Last name: ";
-            cin >> lname;
+            getline(cin,lname);
 
 
             Person* ptr = search(fname, lname);
@@ -322,24 +354,24 @@ void Network::showMenu(){
             // if not found: cout << "Person not found! \n";
             cout << "Print people with last name \n";
             cout << "Last name: ";
-            cin >> lname;
+            getline(cin,lname);
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin.clear();
 
-            Person* curr = search("", lname);
-
-            if(curr == NULL){
-                cout << "Person not found! \n";
-            }
-            else{
-                while(curr != NULL){
-                    if(curr->l_name == lname){
-                        curr->print_person();
-                    }
-                    else{
-                        curr = curr->next;
-                    }
+            int flag = 1;
+            Person* curr = head;
+            while(flag){
+                if(curr == NULL){
+                    cout << "Person not found! \n";
+                    flag = 0;
                 }
-
-                
+                else if(curr->l_name == lname){
+                    curr->print_person();
+                    flag = 0;
+                }
+                else{
+                    curr = curr->next;
+                }
             }
         }
         
@@ -348,6 +380,7 @@ void Network::showMenu(){
         
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         cout << "\n\nPress Enter key to go back to main menu ... ";
         string temp;
         std::getline (std::cin, temp);
