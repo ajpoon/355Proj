@@ -1,8 +1,6 @@
 
 #include <iostream>
 #include "person.h"
-#include "date.cpp"
-#include "contact.cpp"
 
 Person::Person(){
     // I'm already done! 
@@ -24,25 +22,27 @@ Person::Person(string f_name, string l_name, string b_date, string email, string
     this->l_name = l_name;
     birthdate = new Date(b_date); 
     string type, temp;
-    for (int i = 1; i < email.length(); i++)
+    for (int i = 0; i < email.length(); i++)
     {
         if (email[i] == ')')
         {
             temp = email.substr(i+2);
             break;
         }
-        type += email[i];
+        if(email[i] != '(')
+            type += email[i];
     }
     this->email = new Email(type, temp);
     type = "";
-    for (int i = 1; i < phone.length(); i++)
+    for (int i = 0; i < phone.length(); i++)
     {
         if (phone[i] == ')')
         {
             temp = phone.substr(i+2);
             break;
         }
-        type += phone[i];
+        if(phone[i] != '(')
+            type += phone[i];
     }
     this->phone = new Phone(type, temp);
 
@@ -51,6 +51,7 @@ Person::Person(string f_name, string l_name, string b_date, string email, string
 
 Person::Person(string filename){
     set_person(filename);
+    cout << "in person file" << endl;
 }
 
 
@@ -107,31 +108,34 @@ void Person::set_person(string filename){
     {
         getline(fin, temp);
         f_name = temp;
+        cout << "f_name: " << f_name << endl;
         getline(fin, temp);
         l_name = temp;
         getline(fin, temp);
         birthdate = new Date(temp);
         getline(fin, temp);
-        for (int i = 1; i < temp.length(); i++)
+        for (int i = 0; i < temp.length(); i++)
         {
             if (temp[i] == ')')
             {
                 temp = temp.substr(i+2);
                 break;
             }
-            type += temp[i];
+            if(temp[i] != '(')
+                type += temp[i];
         }
         phone = new Phone(type, temp);
         type = "";
         getline(fin, temp);
-        for (int i = 1; i < temp.length(); i++)
+        for (int i = 0; i < temp.length(); i++)
         {
             if (temp[i] == ')')
             {
                 temp = temp.substr(i+2);
                 break;
             }
-            type += temp[i];
+            if(temp[i] != '(')
+                type += temp[i];
         }
         email = new Email(type, temp);
     }
@@ -166,20 +170,4 @@ void Person::print_person(){
 	birthdate->print_date();
     phone->print();
     email->print();
-}
-
-int main(){
-
-    Person c1("person_template.txt");
-    c1.print_person();
-    cout << "----------------\n";
-
-    Person c2("person_template.txt");
-    c2.print_person();
-    cout << "----------------\n";
-
-    cout << "Is c1 equal to c2: " << (c1==c2) << endl;
-    cout << "Is c1 not equal to c2: " << (c1!=c2) << endl;
-
-    return 0;
 }
