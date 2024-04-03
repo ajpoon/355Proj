@@ -1,6 +1,8 @@
 
-#include "person.h"
 #include <iostream>
+#include "person.h"
+#include "date.cpp"
+#include "contact.cpp"
 
 Person::Person(){
     // I'm already done! 
@@ -141,7 +143,8 @@ bool Person::operator==(const Person& rhs){
     // TODO: Complete this method!
     // Note: you should check first name, last name and birthday between two persons
     // refer to bool Date::operator==(const Date& rhs)
-    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate == rhs.birthdate)
+    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate->get_month() == rhs.birthdate->get_month()
+    && birthdate->get_day() == rhs.birthdate->get_day() && birthdate->get_year() == rhs.birthdate->get_year())
         return true;
     else
         return false;
@@ -149,7 +152,8 @@ bool Person::operator==(const Person& rhs){
 
 bool Person::operator!=(const Person& rhs){ 
     // TODO: Complete this method!
-    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate == rhs.birthdate)
+    if (f_name == rhs.f_name && l_name == rhs.l_name && birthdate->get_month() == rhs.birthdate->get_month()
+    && birthdate->get_day() == rhs.birthdate->get_day() && birthdate->get_year() == rhs.birthdate->get_year())
         return false;
     else
         return true;
@@ -166,7 +170,7 @@ void Person::print_person(){
 
 int main(){
 
-    Person c1;
+    Person c1("person_template.txt");
     c1.print_person();
     cout << "----------------\n";
 

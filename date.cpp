@@ -70,3 +70,18 @@ void Date::print_date(){
 
     cout << birthdate << endl;
 }
+
+int Date::get_month()
+{
+    return month;
+}
+
+int Date::get_day()
+{
+    return day;
+}
+
+int Date::get_year()
+{
+    return year;
+}

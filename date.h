@@ -14,6 +14,9 @@ class Date
     public:
         Date(string b_date);
         void print_date();
+        int get_month();
+        int get_day();
+        int get_year();
 };
 
 #endif
