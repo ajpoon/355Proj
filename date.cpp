@@ -1,3 +1,4 @@
+
 #include "date.h"
 
 Date::Date(string b_date){
@@ -30,45 +31,49 @@ Date::Date(string b_date){
 }
 
 void Date::print_date(){
-    string birthdate;
+
     if(month == 1){
-        birthdate = "January " + to_string(day) + ", " + to_string(year);
+        strbirth = "January " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 2){
-        birthdate = "February " + to_string(day) + ", " + to_string(year);
+        strbirth = "February " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 3){
-        birthdate = "March " + to_string(day) + ", " + to_string(year);
+        strbirth = "March " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 4){
-        birthdate = "April " + to_string(day) + ", " + to_string(year);
+        strbirth = "April " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 5){
-        birthdate = "May " + to_string(day) + ", " + to_string(year);
+        strbirth = "May " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 6){
-        birthdate = "June " + to_string(day) + ", " + to_string(year);
+        strbirth = "June " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 7){
-        birthdate = "July " + to_string(day) + ", " + to_string(year);
+        strbirth = "July " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 8){
-        birthdate = "August " + to_string(day) + ", " + to_string(year);
+        strbirth = "August " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 9){
-        birthdate = "September " + to_string(day) + ", " + to_string(year);
+        strbirth = "September " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 10){
-        birthdate = "October " + to_string(day) + ", " + to_string(year);
+        strbirth = "October " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 11){
-        birthdate = "November " + to_string(day) + ", " + to_string(year);
+        strbirth = "November " + to_string(day) + ", " + to_string(year);
     }
     else if(month == 12){
-        birthdate = "December " + to_string(day) + ", " + to_string(year);
+        strbirth = "December " + to_string(day) + ", " + to_string(year);
     }
 
-    cout << birthdate << endl;
+    cout << strbirth << endl;
+}
+
+string Date::get_date(){
+    return strbirth;
 }
 
 int Date::get_month()
