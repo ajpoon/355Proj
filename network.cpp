@@ -15,6 +15,7 @@ Network::Network(string fileName){
     // TODO: complete this method!
     // Implement it in one single line!
     // You may need to implement the load method before this!
+    loadDB(fileName);
 }
 
 Network::~Network(){ 
@@ -70,25 +71,6 @@ void Network::loadDB(string filename){
     string temp, type;
 
     ifstream fin1(filename);
-
-    // while(getline(fin1, temp)){
-    //     cout << "in while loop" << endl;
-    //     if(temp == "--------------------"){
-    //         count++;
-    //     }
-    // }
-    
-    // for(int i = 0; i < count; i++){
-    //         Person* newPerson = new Person(filename);
-    //         if(head == NULL){
-    //             head = tail = newPerson;
-    //         }
-    //         else{
-    //             tail->next = newPerson;
-    //             newPerson->prev = tail;
-    //             tail = newPerson;
-    //         }
-    // }
 
     string fname, lname, bdate, email, phone, dashes;
 
@@ -175,7 +157,6 @@ void Network::push_back(Person* newEntry){
     // Adds a new Person (newEntry) to the back of LL
     // TODO: Complete this method
 
-    //check if the person exists
     Person* curr = head;
 
     
@@ -200,22 +181,9 @@ void Network::push_back(Person* newEntry){
 
 bool Network::remove(string fname, string lname){
     // TODO: Complete this method
-        // need to find where the person is and then delete them
+
     Person* temp = head;
     Person* tprev = head;
-    // for(int i = 0; i < count; i++){
-    //     if(curr == NULL)
-    //         return false;
-    //     else if(curr->f_name == fname && curr->l_name == lname){
-    //         (curr->prev)->next = curr->next;
-    //         (curr->next)->prev = curr->prev;
-    //         delete curr;
-    //         return true;
-    //     }
-    //     else{
-    //         curr = curr->next;
-    //     }
-    // }
 
     for(int i = 0; i < count; i++){
         if(i == 0 && count == 1){
@@ -305,6 +273,7 @@ void Network::showMenu(){
             else{
                 cout << "Network loaded from " << fileName << " with " << count << " people \n";
             }
+            printDB();
         }
         else if (opt == 3){
             // TODO: Complete me!
@@ -319,11 +288,11 @@ void Network::showMenu(){
             if(ptr == NULL){
                 string bdate, email, phone;
                 cout << "Birthday: ";
-                cin >> bdate;
+                getline(cin,bdate);
                 cout << "Email: ";
-                cin >> email;
+                getline(cin,email);
                 cout << "Phone: ";
-                cin >> phone;
+                getline(cin,phone);
                 Person* newPerson = new Person(fname, lname, bdate, email, phone);
                 push_front(newPerson);
             }
@@ -361,17 +330,18 @@ void Network::showMenu(){
             int flag = 1;
             Person* curr = head;
             while(flag){
-                if(curr == NULL){
-                    cout << "Person not found! \n";
-                    flag = 0;
-                }
-                else if(curr->l_name == lname){
+                if(curr->l_name == lname){
                     curr->print_person();
+                    curr = curr->next;
                     flag = 0;
                 }
                 else{
                     curr = curr->next;
                 }
+            }
+
+            if(flag){
+                cout << "Person not found! \n";
             }
         }
         
