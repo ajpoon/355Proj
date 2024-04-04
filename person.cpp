@@ -108,7 +108,6 @@ void Person::set_person(string filename){
     {
         getline(fin, temp);
         f_name = temp;
-        cout << "f_name: " << f_name << endl;
         getline(fin, temp);
         l_name = temp;
         getline(fin, temp);
