@@ -345,7 +345,7 @@ void Network::showMenu(){
                 cout << "Person not found! \n";
             }
         }
-        else if (opt = 6){
+        else if (opt == 6){
             cout << "Make Friends: " << endl;
             cout << "Person 1" << endl;
             cout << "First name: ";
