@@ -363,8 +363,10 @@ void Network::showMenu(){
                 Person* person2 = search(fname, lname);
                 if (person2 != NULL)
                 {
-                    cout << person1->print_person() << endl;
-                    cout << person2->print_person() << endl;
+                    person1->print_person();
+                    cout << endl;
+                    person2->print_person();
+                    cout << endl;
                 }
                 else
                 {
