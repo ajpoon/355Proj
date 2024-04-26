@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "person.h"
+#include "misc.h"
 
 Person::Person(){
     // I'm already done! 
@@ -169,6 +170,11 @@ void Person::print_person(){
 	birthdate->print_date();
     phone->print();
     email->print();
+    for(unsigned int i = 0; i < myfriends.size(); i++)
+    {
+        cout << codeName(myfriends[i]->f_name, myfriends[i]->l_name) << " ";
+        cout << "(" << myfriends[i]->f_name << " " << myfriends[i]->l_name << ")" << endl;
+    }
 }
 
 void Person::makeFriend(Person* newFriend)
