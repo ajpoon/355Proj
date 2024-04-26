@@ -170,3 +170,8 @@ void Person::print_person(){
     phone->print();
     email->print();
 }
+
+void Person::makeFriend(Person* newFriend)
+{
+    myfriends.push_back(*newFriend);
+}

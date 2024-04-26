@@ -363,6 +363,8 @@ void Network::showMenu(){
                 Person* person2 = search(fname, lname);
                 if (person2 != NULL)
                 {
+                    person1->makeFriend(person2);
+                    person2->makeFriend(person1);
                     person1->print_person();
                     cout << endl;
                     person2->print_person();
