@@ -173,5 +173,5 @@ void Person::print_person(){
 
 void Person::makeFriend(Person* newFriend)
 {
-    myfriends.push_back(*newFriend);
+    myfriends.push_back(newFriend);
 }
