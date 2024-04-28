@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <algorithm>
 #include "person.h"
 #include "misc.h"
 
@@ -166,9 +167,11 @@ bool Person::operator!=(const Person& rhs){
 
 void Person::print_person(){
     // Already implemented for you! Do not change!
-	cout << l_name <<", " << f_name << endl;
-	birthdate->print_date();
+    cout << l_name <<", " << f_name << endl;
+    birthdate->print_date();
+    cout << "Phone ";
     phone->print();
+    cout << "Email ";
     email->print();
     for(unsigned int i = 0; i < myfriends.size(); i++)
     {
@@ -180,4 +183,13 @@ void Person::print_person(){
 void Person::makeFriend(Person* newFriend)
 {
     myfriends.push_back(newFriend);
+}
+
+void Person::pprint_friends(){
+  sort(myfriends.begin(), myfriends.end());
+  cout << f_name <<", " << l_name << endl;
+  cout << "------" << endl;
+  for(unsigned int i = 0; i < myfriends.size(); i++){
+    cout << myfriends[i]->f_name << ", " << myfriends[i]->l_name << endl;
+    }
 }

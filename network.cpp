@@ -186,24 +186,25 @@ bool Network::remove(string fname, string lname){
     Person* tprev = head;
 
     for(int i = 0; i < count; i++){
-        if(i == 0 && count == 1){
-            head = head->next;
-            free(temp);
+      if(i == 0){
+        if(temp->f_name == fname && temp->l_name == lname){
+          head = temp->next;
+          free(temp);
+          count--;
+          return true;
         }
-        else{
-            if(i == count - 1 && temp){
-                tprev->next = temp->next;
-                count--;
-                free(temp);
-                return true;
-            }
-            else{
-                tprev = temp;
-                if(tprev == NULL)
-                    break;
-                temp = temp->next;
-            }
+        return false;
+      }
+      else{
+        if(temp->f_name == fname && temp->l_name == lname){
+          tprev->next = temp->next;
+          count--;
+          free(temp);
+          return true;
+          
         }
+      } 
+        
     }
     return false;
     
@@ -311,8 +312,10 @@ void Network::showMenu(){
 
             Person* ptr = search(fname, lname);
             if(ptr != NULL){
-                remove(fname, lname);
-                cout << "Remove Successful! \n";
+                if(remove(fname, lname))
+                  cout << "Remove Successful! \n";
+                else
+                  cout << "rip \n";
             }
             else{
                 cout << "Person not found! \n";
@@ -331,9 +334,12 @@ void Network::showMenu(){
             int flag = 1;
             Person* curr = head;
             while(flag){
-                if(curr->l_name == lname){
+                if(curr == NULL){
+                    cout << "Person not found! \n";
+                    flag = 0;
+                }
+                else if(curr->l_name == lname){
                     curr->print_person();
-                    curr = curr->next;
                     flag = 0;
                 }
                 else{
@@ -349,16 +355,16 @@ void Network::showMenu(){
             cout << "Make Friends: " << endl;
             cout << "Person 1" << endl;
             cout << "First name: ";
-            cin >> fname;
+            getline(cin,fname);
             cout << "Last name: ";
-            cin >> lname;
+            getline(cin,lname);
             Person* person1 = search(fname, lname);
             if(person1 != NULL){
                 cout << "Person 2" << endl;
                 cout << "First name: ";
-                cin >> fname;
+                getline(cin,fname);
                 cout << "Last name: ";
-                cin >> lname;
+                getline(cin,lname);
                 cout << endl << endl;
                 Person* person2 = search(fname, lname);
                 if (person2 != NULL)
@@ -368,6 +374,10 @@ void Network::showMenu(){
                     person1->print_person();
                     cout << endl;
                     person2->print_person();
+                    cout << endl;
+                    person1->pprint_friends();
+                    cout << endl;
+                    person2->pprint_friends();
                     cout << endl;
                 }
                 else
